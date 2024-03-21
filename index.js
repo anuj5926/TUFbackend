@@ -71,10 +71,8 @@ app.get('/senddata', async (req, res) => {
                 } else {
                     const parsedData = data.map(jsonString => JSON.parse(jsonString));
                     console.log('Retrieved data from Redis list:');
-                    // console.log('Retrieved data from Redis list:', parsedData);
-                    // res.status(200).json({ parsedData:parsedData });
-                    res.status(200);
-                    res.send(json({parsedData:parsedData}));
+                    console.log('Retrieved data from Redis list:', parsedData);
+                    res.status(200).json({ parsedData:parsedData });
                 }
             });
         } else {
@@ -83,9 +81,7 @@ app.get('/senddata', async (req, res) => {
                 const allCodeData = await CodeModel.find({});
                 console.log(allCodeData);
                 allCodeData.map(jsonString => redis.rpush("userData",JSON.stringify(jsonString)));
-                // res.status(200).json({ parsedData:allCodeData });
-                res.status(200);
-                res.send(json({parsedData:allCodeData}));
+                res.status(200).json({ parsedData:allCodeData });
             } catch (error) {
                 reject(error);
                 res.status(400).json({ error });
